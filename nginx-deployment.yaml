@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    description: Deployment serwera Nginx w wersji 1.16
+    kubernetes.io/change-cause: Deployment serwera Nginx w wersji 1.16
+  creationTimestamp: "2025-11-17T18:06:23Z"
+  generation: 4
+  labels:
+    app: nginx-proxy
+    typ: proxy
+  name: nginx-proxy
+  namespace: default
+  resourceVersion: "1813"
+  uid: f0a384c3-3a97-48b4-9572-c1f2a6831dba
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nginx-proxy
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 2
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: nginx-proxy
+    spec:
+      containers:
+      - image: nginx:1.16
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 5
+  conditions:
+  - lastTransitionTime: "2025-11-17T18:06:32Z"
+    lastUpdateTime: "2025-11-17T18:06:32Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-11-17T18:06:23Z"
+    lastUpdateTime: "2025-11-17T18:06:33Z"
+    message: ReplicaSet "nginx-proxy-7db74fd787" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 4
+  readyReplicas: 5
+  replicas: 5
+  updatedReplicas: 5
